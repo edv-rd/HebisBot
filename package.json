@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^14.15.3"
+    "@types/node": "^22.1.0",
+    "discord.js": "^14.15.3",
+    "node-fetch": "^3.3.2",
+    "random": "^4.1.0"
   }
 }
