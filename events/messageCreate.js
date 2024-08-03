@@ -7,6 +7,8 @@ module.exports = {
 
 		try {
 			const messageContent = message.content.toLowerCase();
+
+            console.log(messageContent);
             
             if (messageContent.includes('svidde')) {
                 message.react('<:svidde:768197875652886560>')
