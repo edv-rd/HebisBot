@@ -6,7 +6,8 @@ module.exports = {
     .setName("dagensnyheter")
     .setDescription("ny upplaga av dagens nyheter"),
   async execute(interaction) {
-    await interaction.reply("Stefan tänker,,,,,,,,");
+    await interaction.deferReply().then(() => console.log("defer?"));
+
     try {
       // make tidningsnamn
 
