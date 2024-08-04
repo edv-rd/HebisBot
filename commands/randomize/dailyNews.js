@@ -6,8 +6,10 @@ module.exports = {
     .setName("dagensnyheter")
     .setDescription("ny upplaga av dagens nyheter"),
   async execute(interaction) {
+    await interaction.deferReply();
+
+
     try {
-      await interaction.deferReply();
 
       // make tidningsnamn
 
@@ -31,7 +33,7 @@ module.exports = {
           const aktivitet = await fetchRandom("headline_aktivitet");
           const geografi = await fetchRandom("headline_geografi");
 
-          return `${person} ${aktivitet} ${geografi} `;
+          return `${person} ${aktivitet} ${geografi}`;
         },
         async () => {
           const person = await fetchRandom("headline_person");
