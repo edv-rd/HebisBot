@@ -5,8 +5,8 @@ module.exports = {
 		.setName('nyttnamn')
 		.setDescription('du får ett nytt namn'),
 	async execute(interaction) {
+        await interaction.deferReply();
 		try {
-            await interaction.deferReply();
 
             const fetch = (await import('node-fetch')).default;
             
@@ -15,10 +15,10 @@ module.exports = {
             const newNickname = data.response.entry[0].entry; // Access the "entry" property
 
             await interaction.member.setNickname(newNickname);
-            await interaction.followUp(`Ditt nya namn är: ${newNickname}`);
+            await interaction.editReply(`Ditt nya namn är: ${newNickname}`);
         } catch (e) {
             console.error(e);
-            await interaction.reply('Tyvärr, min vän. Det uppstod ett fel.');
+            await interaction.editReply('Tyvärr, min vän. Det uppstod ett fel.');
         }
 	},
 };
