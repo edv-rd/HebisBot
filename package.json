@@ -14,5 +14,6 @@
     "discord.js": "^14.15.3",
     "node-fetch": "^3.3.2",
     "random": "^4.1.0"
-  }
+  },
+  "nodeVersion": "18.x"
 }
