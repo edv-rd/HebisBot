@@ -13,7 +13,8 @@ module.exports = {
         return;
       }
       try {
-        await command.execute(interaction);
+		console.log(`interaction created at ${interaction.createdAt}`);
+        await command.execute(interaction).then(() => {console.log(`interaction executed `)});
       } catch (error) {
         console.error(`Error executing ${interaction.commandName}`);
         console.error(error);
