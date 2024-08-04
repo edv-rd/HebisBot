@@ -6,8 +6,8 @@ module.exports = {
     .setName("dagensnyheter")
     .setDescription("ny upplaga av dagens nyheter"),
   async execute(interaction) {
-      await interaction.deferReply();
     try {
+      await interaction.deferReply();
       // make tidningsnamn
 
       const tidning1 = await fetchRandom("tidning1");
@@ -113,7 +113,7 @@ module.exports = {
       await interaction.editReply(renderedNyheter);
     } catch (e) {
       console.error(e);
-      await interaction.editReply(`Tyvärr, min vän. Det uppstod ett fel. ${e}`);
+      await interaction.reply(`Tyvärr, min vän. Det uppstod ett fel. ${e}`);
     }
   },
 };
