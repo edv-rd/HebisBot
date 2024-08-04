@@ -5,7 +5,7 @@ module.exports = {
 		.setName('nyttnamn')
 		.setDescription('du får ett nytt namn'),
 	async execute(interaction) {
-        interaction.deferReply();
+        await interaction.deferReply();
 		try {
 
             const fetch = (await import('node-fetch')).default;
