@@ -12,7 +12,9 @@
   "dependencies": {
     "@types/node": "^22.1.0",
     "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5",
     "node-fetch": "^3.3.2",
     "random": "^4.1.0"
-  }
+  },
+  "nodeVersion": "21.6.2"
 }

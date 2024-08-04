@@ -14,7 +14,6 @@ module.exports = {
       }
       try {
 		console.log(`interaction created at ${interaction.createdAt}`);
-		await interaction.deferReply();
         await command.execute(interaction).then(() => {console.log(`interaction executed `)});
       } catch (error) {
         console.error(`Error executing ${interaction.commandName}`);
