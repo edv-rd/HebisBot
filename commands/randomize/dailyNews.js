@@ -71,12 +71,12 @@ module.exports = {
           const person = await fetchRandom("person");
           const ord = await fetchRandom("ord");
           const företeelse = await fetchRandom("företeelse");
-          return `Nej, ${person}, det är inte ${ord} med ${företeelse}!`;
+          return `Nej, ${person}, det är inte "${ord}" med ${företeelse}`;
         },
         async () => {
           const problemet = await fetchRandom("problemet");
           const lösning = await fetchRandom("lösning");
-          return `Lösningen på ${problemet} är enkel - ${lösning}!`;
+          return `Lösningen på ${problemet} är enkel - ${lösning}`;
         },
       ];
 
