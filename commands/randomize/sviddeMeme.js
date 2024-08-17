@@ -3,7 +3,7 @@ const Canvas = require('@napi-rs/canvas');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("sviddememe")
+    .setName("svidde_meme")
     .setDescription("gör ett svidde meme :)")
     .addStringOption((option) =>
       option.setName("top_text").setDescription("översta raden")
