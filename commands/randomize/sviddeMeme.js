@@ -60,7 +60,7 @@ module.exports = {
       context.fillStyle = "#ffffff";
 
       
-      context.fillText(top_text, 40, 10);
+      context.fillText(top_text, 40, 40);
       context.fillText(bottom_text, 40, 900);
 
       // Use the helpful Attachment class structure to process the file for you
