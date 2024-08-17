@@ -29,7 +29,9 @@ module.exports = {
       const canvas = Canvas.createCanvas(248, 203);
       const context = canvas.getContext("2d");
 
+      /*
       const applyText = (canvas, text) => {
+
         const context = canvas.getContext('2d');
       
         // Declare a base size of the font
@@ -44,15 +46,16 @@ module.exports = {
         // Return the result to use in the actual canvas
         return context.font;
       };
+      */
 
       const background = await Canvas.loadImage("./1.png");
 
       // This uses the canvas dimensions to stretch the image onto the entire canvas
       context.drawImage(background, 0, 0, canvas.width, canvas.height);
 
-      context.font = applyText(canvas, interaction.member.displayName);
-      context.fillStyle = '#ffffff';
-      context.fillText(interaction.member.displayName, canvas.width / 2.5, canvas.height / 1.8);
+      context.font = "28px sans-serif";
+      context.fillStyle = "#ffffff";
+      context.fillText("Profile", canvas.width / 2.5, canvas.height / 3.5);
 
       // Use the helpful Attachment class structure to process the file for you
       const attachment = new AttachmentBuilder(await canvas.encode("png"), {
