@@ -45,7 +45,7 @@ module.exports = {
         return context.font;
       };
 
-      const background = await Canvas.loadImage("./1.jpeg");
+      const background = await Canvas.loadImage("./1.png");
 
       // This uses the canvas dimensions to stretch the image onto the entire canvas
       context.drawImage(background, 0, 0, canvas.width, canvas.height);
