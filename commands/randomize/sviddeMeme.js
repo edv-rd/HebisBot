@@ -25,7 +25,7 @@ module.exports = {
         // Use the helpful Attachment class structure to process the file for you
         const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
     
-        interaction.reply({ files: [attachment] });
+        interaction.editReply({ files: [attachment] });
     } catch (e) {
       console.error(e);
       await interaction.editReply("Tyvärr, min vän. Det uppstod ett fel.");
