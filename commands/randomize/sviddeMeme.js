@@ -26,7 +26,7 @@ module.exports = {
   async execute(interaction) {
     await interaction.deferReply().then(() => console.log("defer?"));
     try {
-      const canvas = Canvas.createCanvas(248, 203);
+      const canvas = Canvas.createCanvas(1024, 1024);
       const context = canvas.getContext("2d");
 
       /*
@@ -53,9 +53,15 @@ module.exports = {
       // This uses the canvas dimensions to stretch the image onto the entire canvas
       context.drawImage(background, 0, 0, canvas.width, canvas.height);
 
+      const top_text = interaction.options.getString("top_text");
+      const bottom_text = interaction.options.getString("bottom_text");
+
       context.font = "28px sans-serif";
       context.fillStyle = "#ffffff";
-      context.fillText("Profile", canvas.width / 2.5, canvas.height / 3.5);
+
+      
+      context.fillText(top_text, canvas.width / 2.5, canvas.height / 3.5);
+      context.fillText(bottom_text, canvas.width / 1.5, canvas.height / 3.5);
 
       // Use the helpful Attachment class structure to process the file for you
       const attachment = new AttachmentBuilder(await canvas.encode("png"), {
