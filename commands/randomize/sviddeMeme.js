@@ -16,12 +16,14 @@ module.exports = {
         .setName("top_text")
         .setDescription("översta raden")
         .setRequired(true)
+        .setMaxLength(10)
     )
     .addStringOption((option) =>
       option
         .setName("bottom_text")
         .setDescription("understa raden")
         .setRequired(true)
+        .setMaxLength(10)
     ),
   async execute(interaction) {
     await interaction.deferReply().then(() => console.log("defer?"));
@@ -59,7 +61,6 @@ module.exports = {
       context.font = "120px sans-serif";
       context.fillStyle = "#ffffff";
 
-      
       context.fillText(top_text, 40, 120);
       context.fillText(bottom_text, 40, 900);
 
