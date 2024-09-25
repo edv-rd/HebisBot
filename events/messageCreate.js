@@ -13,7 +13,7 @@ module.exports = {
         message.react("<:svidde:768197875652886560>");
       }
 
-      if (messageContent.includes("gm")) {
+      if (messageContent.toLowerCase() === "gm") {
         await message.reply("gm");
         message.react("🌞");
       }
