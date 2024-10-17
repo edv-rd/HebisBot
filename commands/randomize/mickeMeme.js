@@ -16,7 +16,7 @@ const {
           .setName("text")
           .setDescription("text")
           .setRequired(true)
-          .setMaxLength(16)
+          .setMaxLength(32)
       ),
       
     async execute(interaction) {
