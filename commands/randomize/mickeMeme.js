@@ -31,7 +31,7 @@ const {
           const context = canvas.getContext('2d');
         
           // Declare a base size of the font
-          let fontSize = 70;
+          let fontSize = 120;
         
           do {
             // Assign the font to the context and decrement it so it can be measured again
