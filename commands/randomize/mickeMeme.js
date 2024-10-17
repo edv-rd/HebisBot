@@ -25,7 +25,7 @@ const {
         const canvas = Canvas.createCanvas(548, 348);
         const context = canvas.getContext("2d");
   
-        /*
+        
         const applyText = (canvas, text) => {
   
           const context = canvas.getContext('2d');
@@ -37,12 +37,12 @@ const {
             // Assign the font to the context and decrement it so it can be measured again
             context.font = `${fontSize -= 10}px sans-serif`;
             // Compare pixel width of the text to the canvas minus the approximate avatar size
-          } while (context.measureText(text).width > canvas.width - 300);
+          } while (context.measureText(text).width > 200);
         
           // Return the result to use in the actual canvas
           return context.font;
         };
-        */
+        
   
         const background = await Canvas.loadImage("./micke.png");
   
@@ -52,7 +52,7 @@ const {
         const text = interaction.options.getString("text");
 
   
-        context.font = "120px sans-serif";
+        context.font = applyText(canvas, text);
         context.fillStyle = "#000000";
   
         context.fillText(text, 9, 202, 197);
