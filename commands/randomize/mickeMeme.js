@@ -55,7 +55,7 @@ const {
         context.font = "120px sans-serif";
         context.fillStyle = "#000000";
   
-        context.fillText(text, 12, 308, 197);
+        context.fillText(text, 9, 202, 197);
 
   
         // Use the helpful Attachment class structure to process the file for you
