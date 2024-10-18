@@ -50,12 +50,16 @@ const {
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
   
         const text = interaction.options.getString("text");
-
-  
-        context.font = applyText(canvas, text);
+        const splitTextArray = text.split(" ")
+        const splitTextArraySecond = splitTextArray.splice(0, Math. ceil(splitTextArray. length / 2));
+        
         context.fillStyle = "#000000";
-  
-        context.fillText(text, 9, 202, 197);
+
+        context.font = applyText(canvas, splitTextArray);
+        context.fillText(splitTextArray, 11, 150, 197);
+
+        context.font = applyText(canvas, splitTextArraySecond);
+        context.fillText(splitTextArraySecond, 11, 240, 197);
 
   
         // Use the helpful Attachment class structure to process the file for you
