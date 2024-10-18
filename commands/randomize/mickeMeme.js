@@ -55,11 +55,14 @@ const {
         
         context.fillStyle = "#000000";
 
-        context.font = applyText(canvas, splitTextArray);
-        context.fillText(splitTextArray, 11, 150, 197);
+        const splitText = splitTextArray.join(" ");
+        const splitTextSecond = splitTextArraySecond.join(" ");
 
-        context.font = applyText(canvas, splitTextArraySecond);
-        context.fillText(splitTextArraySecond, 11, 240, 197);
+        context.font = applyText(canvas, splitText);
+        context.fillText(splitText, 11, 150, 197);
+
+        context.font = applyText(canvas, splitTextSecond);
+        context.fillText(splitTextSecond, 11, 240, 197);
 
   
         // Use the helpful Attachment class structure to process the file for you
