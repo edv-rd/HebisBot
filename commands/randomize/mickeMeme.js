@@ -58,11 +58,11 @@ const {
         const splitText = splitTextArray.join(" ");
         const splitTextSecond = splitTextArraySecond.join(" ");
 
-        context.font = applyText(canvas, splitText);
+        context.font = `80px sans-serif`;
         context.fillText(splitText, 11, 240, 197);
 
 
-        context.font = applyText(canvas, splitTextSecond);
+        // context.font = applyText(canvas, splitTextSecond);
         context.fillText(splitTextSecond, 11, 150, 197);
 
 
