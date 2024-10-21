@@ -18,7 +18,7 @@ module.exports = {
         message.react("🌞");
       }
 
-      if (messageContent.includes("morn")) {
+      if (messageContent.toLowerCase() === "morn") {
         await message.reply("morn");
         flaggor = ["🇩🇰", "🇫🇮", "🇫🇴"];
         message.react(flaggor[Math.floor(Math.random() * flaggor.length)]);
