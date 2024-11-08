@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, AttachmentBuilder } = require("discord.js");
 const fetchRandom = require("../../util/fetch-random");
 const Canvas = require("@napi-rs/canvas");
+const fs = require("fs");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -10,109 +11,128 @@ module.exports = {
     await interaction.deferReply().then(() => console.log("defer?"));
 
     try {
-      // make tidningsnamn
+      const fetchEverything = async () => {
+        const tidning1 = await fetchRandom("tidning1");
+        const tidning2 = await fetchRandom("tidning2");
+        const renderedTidningsnamn = `${tidning1}${tidning2}`;
 
-      const tidning1 = await fetchRandom("tidning1");
-      const tidning2 = await fetchRandom("tidning2");
+        const person = await fetchRandom("headline_person");
+        const aktivitet = await fetchRandom("headline_aktivitet");
+        const plats = await fetchRandom("headline_plats");
 
-      const renderedTidningsnamn = `${tidning1}${tidning2}`;
+        const headlinesArray = [
+          `${person} ${aktivitet} ${plats}`,
+          `${person} ${aktivitet}`,
+        ];
 
-      // make headline
+        const renderedHeadline = await headlinesArray[
+          Math.floor(Math.random() * headlinesArray.length)
+        ];
 
-      const headlinesArray = [
-        async () => {
-          const person = await fetchRandom("headline_person");
-          const aktivitet = await fetchRandom("headline_aktivitet");
-          const plats = await fetchRandom("headline_plats");
-          const geografi = await fetchRandom("headline_geografi");
-          return `${person} ${aktivitet} ${plats} ${geografi}`;
-        },
-        async () => {
-          const person = await fetchRandom("headline_person");
-          const aktivitet = await fetchRandom("headline_aktivitet");
-          const geografi = await fetchRandom("headline_geografi");
+        const opinionsArray = [
+          async () => {
+            const uppmaning = await fetchRandom("headline_uppmaning");
+            const målgrupp = await fetchRandom("headline_målgrupp");
+            const aktiviteter = await fetchRandom("headline_aktiviteter");
+            const tidplats = await fetchRandom("headline_tidplats");
+            return `${uppmaning} ${målgrupp} ${aktiviteter} ${tidplats}`;
+          },
+          async () => {
+            const koncept = await fetchRandom("koncept");
+            const retorisk_fråga = await fetchRandom("retorisk_fråga");
+            return `${koncept} - ${retorisk_fråga}?`;
+          },
+          async () => {
+            const person = await fetchRandom("person");
+            const ord = await fetchRandom("ord");
+            const företeelse = await fetchRandom("företeelse");
+            return `Nej, ${person}, det är inte "${ord}" med ${företeelse}`;
+          },
+          async () => {
+            const problemet = await fetchRandom("problemet");
+            const lösning = await fetchRandom("lösning");
+            return `Lösningen på ${problemet} är enkel - ${lösning}`;
+          },
+        ];
 
-          return `${person} ${aktivitet} ${geografi}`;
-        },
-        async () => {
-          const person = await fetchRandom("headline_person");
-          const aktivitet = await fetchRandom("headline_aktivitet");
+        const renderedOpinionEntry = await opinionsArray[
+          Math.floor(Math.random() * opinionsArray.length)
+        ]();
 
-          return `${person} ${aktivitet}`;
-        },
-        async () => {
-          const person = await fetchRandom("headline_person");
-          const aktivitet = await fetchRandom("headline_aktivitet");
+        const skribentFornamn = await fetchRandom("skribent-fornamn");
+        const skribentEfternamn = await fetchRandom("skribent-efternamn");
 
-          const plats = await fetchRandom("headline_plats");
-          return `${person} ${aktivitet} ${plats}`;
-        },
-      ];
+        const renderedOpinionSkribent = `${skribentFornamn} ${skribentEfternamn}`;
 
-      const renderedHeadline = await headlinesArray[
-        Math.floor(Math.random() * headlinesArray.length)
-      ]();
+        return {
+          renderedHeadline,
+          renderedOpinionEntry,
+          renderedOpinionSkribent,
+          renderedTidningsnamn,
+        };
+      };
 
-      // make opinion
+      const {
+        renderedHeadline,
+        renderedOpinionEntry,
+        renderedOpinionSkribent,
+        renderedTidningsnamn,
+      } = await fetchEverything();
 
-      const opinionsArray = [
-        async () => {
-          const uppmaning = await fetchRandom("headline_uppmaning");
-          const målgrupp = await fetchRandom("headline_målgrupp");
-          const aktiviteter = await fetchRandom("headline_aktiviteter");
-          const tidplats = await fetchRandom("headline_tidplats");
-          return `${uppmaning} ${målgrupp} ${aktiviteter} ${tidplats}`;
-        },
-        async () => {
-          const koncept = await fetchRandom("koncept");
-          const retorisk_fråga = await fetchRandom("retorisk_fråga");
-          return `${koncept} - ${retorisk_fråga}?`;
-        },
-        async () => {
-          const person = await fetchRandom("person");
-          const ord = await fetchRandom("ord");
-          const företeelse = await fetchRandom("företeelse");
-          return `Nej, ${person}, det är inte "${ord}" med ${företeelse}`;
-        },
-        async () => {
-          const problemet = await fetchRandom("problemet");
-          const lösning = await fetchRandom("lösning");
-          return `Lösningen på ${problemet} är enkel - ${lösning}`;
-        },
-      ];
+      const getRandomImage = (directoryPath) => {
+        return new Promise((resolve, reject) => {
+          fs.readdir(directoryPath, { withFileTypes: true }, async (err, files) => {
+            if (err) {
+              reject(err);
+            } else {
+              const fileNames = files.filter(file => file.isFile()).map(file => file.name);
 
-      const renderedOpinionEntry = await opinionsArray[
-        Math.floor(Math.random() * opinionsArray.length)
-      ]();
+              if (fileNames.length === 0) {
+                reject(new Error("No files found in the directory."));
+              } else {
+                const randomFile = fileNames[Math.floor(Math.random() * fileNames.length)];
+                const headlinePicture = await Canvas.loadImage(`${directoryPath}${randomFile}`);
+                resolve(headlinePicture);
+              }
+            }
+          });
+        });
+      };
 
-      const skribentFornamn = await fetchRandom("skribent-fornamn");
-      const skribentEfternamn = await fetchRandom("skribent-efternamn");
+      const canvas = Canvas.createCanvas(1041, 900);
+      const context = canvas.getContext("2d");
 
-      const renderedOpinionSkribent = `${skribentFornamn} ${skribentEfternamn}`;
+      const background = await Canvas.loadImage("./newspaper.png");
+      context.drawImage(background, 0, 0, canvas.width, canvas.height);
 
-      const opinionIntros = [
-        `Huvudledare signerad ${renderedOpinionSkribent}:`,
-        `${renderedOpinionSkribent} tar till orda:`,
-        `${renderedOpinionSkribent} vid pennan:`,
-        `Opinion av ${renderedOpinionSkribent}:`,
-      ];
+      const splitTextArray = renderedHeadline.split(" ");
+      const splitTextArraySecond = splitTextArray.splice(
+        0,
+        Math.ceil(splitTextArray.length / 2)
+      );
 
-      const renderedOpinionIntro =
-        opinionIntros[Math.floor(Math.random() * opinionIntros.length)];
+      const splitText = splitTextArray.join(" ");
+      const splitTextSecond = splitTextArraySecond.join(" ");
 
-      // make the whole thing!
+      const headlinePicture = await getRandomImage("./headline/");
 
-      const renderedNyheter = `
-            📰 ${renderedTidningsnamn} 📰
 
-            🗞 DAGENS NYHETER: 
-            ➡ ${renderedHeadline} 
+      context.font = `2em InterVariable, Georgia, "Times", "Times New Roman", serif`;
+      context.fillText(renderedTidningsnamn.toUpperCase(), 9, 74);
 
-            🖋 ${renderedOpinionIntro}
-            ➡ "${renderedOpinionEntry}"
-            `;
+      context.font = `65px Tiempos, Georgia, "Times", "Times New Roman", serif`;
+      context.fillText(splitText, 54, 394, 590);
 
-      await interaction.editReply(renderedNyheter);
+      context.font = `65px Tiempos, Georgia, "Times", "Times New Roman", serif`;
+      context.fillText(splitTextSecond, 54, 311, 590);
+
+      context.drawImage(headlinePicture, 668, 162, 370, 370);
+
+      const attachment = new AttachmentBuilder(await canvas.encode("png"), {
+        name: "newspaper.png",
+      });
+
+      interaction.editReply({ files: [attachment] });
     } catch (e) {
       console.error(e);
       await interaction.editReply(`Tyvärr, min vän. Det uppstod ett fel. ${e}`);
