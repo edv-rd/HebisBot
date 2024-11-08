@@ -145,7 +145,7 @@ module.exports = {
       context.drawImage(headlinePicture, 668, 162, 370, 370);
 
       context.font = `1em InterVariable, Georgia, "Times", "Times New Roman", serif`;
-      context.fillText("Foto: Polisen", 668, 552);
+      context.fillText("Foto: Privat", 668, 552);
 
       context.font = `1em InterVariable, Georgia, "Times", "Times New Roman", serif`;
       context.fillText("OPINION", 54, 680);
