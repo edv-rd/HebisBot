@@ -114,8 +114,24 @@ module.exports = {
       const splitText = splitTextArray.join(" ");
       const splitTextSecond = splitTextArraySecond.join(" ");
 
-      const headlinePicture = await getRandomImage("./headline/");
+      const splitSkribentTextArray = renderedOpinionEntry.split(" ");
+      const splitSkribentTextArraySecond = splitSkribentTextArray.splice(
+        0,
+        Math.ceil(splitSkribentTextArray.length / 2)
+      );
 
+      const splitSkribentText = splitSkribentTextArray.join(" ");
+      const splitSkribentTextSecond = splitSkribentTextArraySecond.join(" ");
+
+      
+      const headlinePicture = await getRandomImage("./headline/");
+      const opinionPicture = await getRandomImage("./skribent/");
+
+      // tidningsNamn x=9 y=57 font-family: Tiempos, Georgia, "Times", "Times New Roman", serif;
+      // headline x=54 y=311
+      // headline picture x=668 y=162 w=370 h=370
+      // opinionSkribent x=360 y=714 color:#71131c
+      // opinionEntry x=244 y=770
 
       context.font = `2em InterVariable, Georgia, "Times", "Times New Roman", serif`;
       context.fillText(renderedTidningsnamn.toUpperCase(), 9, 74);
@@ -127,6 +143,25 @@ module.exports = {
       context.fillText(splitTextSecond, 54, 311, 590);
 
       context.drawImage(headlinePicture, 668, 162, 370, 370);
+
+      context.font = `1em InterVariable, Georgia, "Times", "Times New Roman", serif`;
+      context.fillText("Foto: Polisen", 668, 552);
+
+      context.font = `1em InterVariable, Georgia, "Times", "Times New Roman", serif`;
+      context.fillText("OPINION", 54, 680);
+
+      context.font = `40px Tiempos, Georgia, "Times", "Times New Roman", serif`;
+      context.fillStyle = "#71131c"
+      context.fillText(renderedOpinionSkribent, 54, 724)
+
+      context.font = `40px Tiempos, Georgia, "Times", "Times New Roman", serif`;
+      context.fillStyle = "#000000"
+      context.fillText(splitSkribentText, 54, 820)
+
+      context.font = `40px Tiempos, Georgia, "Times", "Times New Roman", serif`;
+      context.fillText(splitSkribentTextSecond, 54, 770)
+
+      context.drawImage(opinionPicture, 54, 545, 100, 100);
 
       const attachment = new AttachmentBuilder(await canvas.encode("png"), {
         name: "newspaper.png",
