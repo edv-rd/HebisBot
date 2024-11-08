@@ -1,5 +1,6 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, AttachmentBuilder } = require("discord.js");
 const fetchRandom = require("../../util/fetch-random");
+const Canvas = require("@napi-rs/canvas");
 
 module.exports = {
   data: new SlashCommandBuilder()
