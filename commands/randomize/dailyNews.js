@@ -21,11 +21,13 @@ module.exports = {
         const plats = await fetchRandom("headline_plats");
 
         const headlinesArray = [
-          `${person} ${aktivitet} ${plats}`,
-          `${person} ${aktivitet}`,
+          `${aktivitet} ${plats}`,
+          `${aktivitet}`,
         ];
 
-        const renderedHeadline = await headlinesArray[
+        const renderedHeadlineFirst = person;
+
+        const renderedHeadlineLast = await headlinesArray[
           Math.floor(Math.random() * headlinesArray.length)
         ];
 
@@ -65,15 +67,17 @@ module.exports = {
         const renderedOpinionSkribent = `${skribentFornamn} ${skribentEfternamn}`;
 
         return {
-          renderedHeadline,
+          renderedHeadlineFirst,
+          renderedHeadlineLast,
           renderedOpinionEntry,
           renderedOpinionSkribent,
           renderedTidningsnamn,
         };
       };
 
-      const {
-        renderedHeadline,
+      let {
+        renderedHeadlineFirst,
+        renderedHeadlineLast,
         renderedOpinionEntry,
         renderedOpinionSkribent,
         renderedTidningsnamn,
@@ -105,14 +109,19 @@ module.exports = {
       const background = await Canvas.loadImage("./newspaper.png");
       context.drawImage(background, 0, 0, canvas.width, canvas.height);
 
+
+      /*
       const splitTextArray = renderedHeadline.split(" ");
       const splitTextArraySecond = splitTextArray.splice(
         0,
         Math.ceil(splitTextArray.length / 2)
       );
 
+
       const splitText = splitTextArray.join(" ");
       const splitTextSecond = splitTextArraySecond.join(" ");
+
+      */
 
       const splitSkribentTextArray = renderedOpinionEntry.split(" ");
       const splitSkribentTextArraySecond = splitSkribentTextArray.splice(
@@ -137,31 +146,58 @@ module.exports = {
       context.fillText(renderedTidningsnamn.toUpperCase(), 9, 74);
 
       context.font = `65px Tiempos, Georgia, "Times", "Times New Roman", serif`;
-      context.fillText(splitText, 54, 394, 590);
+      context.fillText(renderedHeadlineFirst, 54, 311, 590);
+
+      if (renderedHeadlineLast.trim().split(" ").length > 3) {
+        let renderedHeadlineArray = renderedHeadlineLast.split(" ");
+        let renderedHeadlineExtraArray = renderedHeadlineArray.splice(
+          0,
+          Math.ceil(renderedHeadlineArray.length / 2)
+        );
+  
+  
+        let renderedHeadlineExtra = renderedHeadlineArray.join(" ");
+        renderedHeadlineLast = renderedHeadlineExtraArray.join(" ");
+
+        context.font = `65px Tiempos, Georgia, "Times", "Times New Roman", serif`;
+        context.fillText(renderedHeadlineExtra, 54, 477, 590);
+
+      }
 
       context.font = `65px Tiempos, Georgia, "Times", "Times New Roman", serif`;
-      context.fillText(splitTextSecond, 54, 311, 590);
+      context.fillText(renderedHeadlineLast, 54, 394, 590);
+
+   
+
+
+      context.font = `65px Tiempos, Georgia, "Times", "Times New Roman", serif`;
+      context.fillText(renderedHeadlineFirst, 54, 311, 590);
 
       context.drawImage(headlinePicture, 668, 162, 370, 370);
 
-      context.font = `1em InterVariable, Georgia, "Times", "Times New Roman", serif`;
-      context.fillText("Foto: Privat", 668, 552);
+      fotoArray = ["Privat", "Polisen", "Arkivbild", "Förundersökningsprotokoll"]
+      fotoText = `Foto: ${fotoArray[
+        Math.floor(Math.random() * fotoArray.length)
+      ]}`
 
       context.font = `1em InterVariable, Georgia, "Times", "Times New Roman", serif`;
-      context.fillText("OPINION", 54, 680);
+      context.fillText(fotoText, 668, 552);
+
+      context.font = `1em InterVariable, Georgia, "Times", "Times New Roman", serif`;
+      context.fillText("OPINION", 224, 680);
 
       context.font = `40px Tiempos, Georgia, "Times", "Times New Roman", serif`;
       context.fillStyle = "#71131c"
-      context.fillText(renderedOpinionSkribent, 54, 724)
+      context.fillText(renderedOpinionSkribent, 224, 724)
 
       context.font = `40px Tiempos, Georgia, "Times", "Times New Roman", serif`;
       context.fillStyle = "#000000"
-      context.fillText(splitSkribentText, 54, 820)
+      context.fillText(splitSkribentText, 224, 820)
 
       context.font = `40px Tiempos, Georgia, "Times", "Times New Roman", serif`;
-      context.fillText(splitSkribentTextSecond, 54, 770)
+      context.fillText(splitSkribentTextSecond, 224, 770)
 
-      context.drawImage(opinionPicture, 54, 545, 100, 100);
+      context.drawImage(opinionPicture, 54, 680, 150, 150);
 
       const attachment = new AttachmentBuilder(await canvas.encode("png"), {
         name: "newspaper.png",
